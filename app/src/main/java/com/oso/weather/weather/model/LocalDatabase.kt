@@ -3,11 +3,17 @@ package com.oso.weather.weather.model
 import com.oso.weather.common.entities.City
 import com.oso.weather.common.entities.WeatherCity
 import com.oso.weather.common.model.CityDao
+import com.oso.weather.common.model.WeatherCityDao
+import com.oso.weather.common.model.WeatherDao
 import com.oso.weather.common.utils.FormatUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class LocalDatabase(private val cityDao: CityDao,  private val utils: FormatUtils) {
+class LocalDatabase(
+    private val cityDao: CityDao,
+    private val weatherDao: WeatherDao,
+    private val weatherCityDao: WeatherCityDao,
+    private val utils: FormatUtils) {
 
     suspend fun getAllCities(onResult: (List<City>) -> Unit) = withContext(Dispatchers.IO){
         onResult(cityDao.getAllCities())
@@ -17,10 +23,16 @@ class LocalDatabase(private val cityDao: CityDao,  private val utils: FormatUtil
         withContext(Dispatchers.IO) {
             val city = utils.weatherCityToCity(weatherCity)
             val weather = utils.weatherCityToWeather(weatherCity)
-            val result = cityDao.addCity(city)
-            //val tempResult = weatherDao.addWeather(weather)*/
-            //val result = weatherCityDao.addCityAndWeather(city, weather)
+            //val result = cityDao.addCity(city)
+            //val tempResult = weatherDao.addWeather(weather)
+            val result = weatherCityDao.addCityAndWeather(city, weather)
             onResult(result > 0)
+        }
+
+
+    suspend fun getWeatherCityByCityId(cityId: Long, onResult: (WeatherCity?) -> Unit) =
+        withContext(Dispatchers.IO) {
+            onResult(weatherDao.getWeatherCityByCityId(cityId))
         }
 
 }

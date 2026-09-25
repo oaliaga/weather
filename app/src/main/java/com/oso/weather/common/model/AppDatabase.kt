@@ -9,4 +9,9 @@ import com.oso.weather.common.utils.Constants
 @Database(entities = [City::class, Weather::class], version = Constants.DB_INIT_VERSION)
 abstract  class AppDatabase : RoomDatabase(){
     abstract fun cityDao(): CityDao
+
+    abstract fun weatherDao(): WeatherDao
+
+    abstract fun weatherCityDao(): WeatherCityDao
+
 }

@@ -9,7 +9,7 @@ import org.koin.core.module.dsl.viewModel
 val weatherModule = module {
 
     single { RemoteDatabase(service = get(), utils = get()) }
-    single { LocalDatabase(cityDao = get(), utils = get()) }
+    single { LocalDatabase(cityDao = get(),get(), weatherCityDao = get(), utils = get()) }
     viewModel { WeatherViewModel(rbd = get(), ldb = get()) }
 
 }

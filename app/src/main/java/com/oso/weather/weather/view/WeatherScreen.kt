@@ -69,9 +69,9 @@ fun WeatherView(
             AntTextTitle(R.string.weather_title)
             WeatherInfoView(uiState.data)
             ActionsView(
-                uiState=uiState,
-                onSelect = {city->
-                    
+                uiState = uiState,
+                onSelect = { city ->
+                    vm.getWeatherByCity(city)
                 },
                 onSave = {
                     vm.saveWeatherCity(uiState.data)
@@ -150,22 +150,22 @@ private fun SearchView(onSearch: (String) -> Unit) {
 @Composable
 private fun ActionsView(
     uiState: WeatherUiState,
-    onSelect:(City)->Unit,
-    onSave:()->Unit
-){
+    onSelect: (City) -> Unit,
+    onSave: () -> Unit
+) {
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(CommonPaddingMin)
-    ){
-        AntDropdownMenu<City> (
-            items=getAllCityPreview(),
-            labelRes=R.string.cities_city,
-            onSelect={ city->
+    ) {
+        AntDropdownMenu<City>(
+            items = uiState.items,
+            labelRes = R.string.cities_city,
+            onSelect = { city ->
                 onSelect(city)
             }
         )
         OutlinedIconButton(
-            onClick = {onSave()},
+            onClick = { onSave() },
             enabled = uiState.data.name.isNotBlank()
         ) {
             Icon(
@@ -174,7 +174,6 @@ private fun ActionsView(
         }
     }
 }
-
 
 
 @Preview(showBackground = true)
