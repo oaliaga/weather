@@ -1,6 +1,7 @@
 package com.oso.weather
 
 import android.app.Application
+import com.oso.weather.common.di.componentsModule
 import com.oso.weather.common.di.localDatasourceModule
 import com.oso.weather.common.di.utilsModule
 import com.oso.weather.weather.di.remoteDataSourceModule
@@ -18,7 +19,7 @@ class MyApp : Application(){
                 utilsModule,
                 remoteDataSourceModule,
                 localDatasourceModule,
-                //componentsModule
+                componentsModule,
                 //citiesModule
             )
         }
