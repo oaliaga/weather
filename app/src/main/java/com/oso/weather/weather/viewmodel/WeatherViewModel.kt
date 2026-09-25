@@ -7,6 +7,7 @@ import com.oso.weather.common.entities.City
 import com.oso.weather.common.entities.WeatherCity
 import com.oso.weather.common.utils.FormatUtils
 import com.oso.weather.common.utils.NetworkUtils
+import com.oso.weather.weather.domain.DataSource
 import com.oso.weather.weather.model.LocalDatabase
 import com.oso.weather.weather.model.RemoteDatabase
 import kotlinx.coroutines.Job
@@ -16,9 +17,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(
-    private val rbd: RemoteDatabase,
-    private val ldb: LocalDatabase,
-    private val utils: NetworkUtils
+    private val ds: DataSource
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(WeatherUiState())
@@ -31,7 +30,7 @@ class WeatherViewModel(
 
     fun getAllCities() {
         executeAction {
-            ldb.getAllCities { result ->
+            ds.getAllCities { result ->
                 if (result.isNotEmpty()) {
                     _uiState.update { it.copy(items = result) }
                 } else {
@@ -43,7 +42,7 @@ class WeatherViewModel(
 
     fun searchWeather(name: String) {
         executeAction {
-            rbd.searchWeatherByName(name) { result ->
+            ds.searchWeatherByName(name) { result ->
                 if (result != null) {
                     _uiState.update { it.copy(data = result) }
                 } else {
@@ -55,7 +54,7 @@ class WeatherViewModel(
 
     fun saveWeatherCity(weatherCity: WeatherCity) {
         executeAction {
-            ldb.addWeatherAndCity(weatherCity) { success ->
+            ds.addWeatherAndCity(weatherCity) { success ->
                 if (success) {
                     _uiState.update { it.copy(msgRes = R.string.weather_local_save_success) }
                 } else {
@@ -67,16 +66,12 @@ class WeatherViewModel(
     }
 
     fun getWeatherByCity(city: City) {
-        executeAction @androidx.annotation.RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) {
-            if(utils.isOnline()){
-                searchWeather(city.name)
-            }else{
-                ldb.getWeatherCityByCityId(city.id) { result ->
-                    if (result != null) {
-                        _uiState.update { it.copy(data = result) }
-                    } else {
-                        _uiState.update { it.copy(msgRes = R.string.weather_local_by_city_error) }
-                    }
+        executeAction {
+            ds.getWeatherByCity(city) { result ->
+                if (result != null) {
+                    _uiState.update { it.copy(data = result) }
+                } else {
+                    _uiState.update { it.copy(msgRes = R.string.weather_local_by_city_error) }
                 }
             }
         }

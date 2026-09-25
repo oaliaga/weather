@@ -1,6 +1,6 @@
 package com.oso.weather.common.entities
 
 data class WeatherResponse(
-    val location: Location = Location(),
+    val location: City = City(),
     val current: Current = Current()
 )

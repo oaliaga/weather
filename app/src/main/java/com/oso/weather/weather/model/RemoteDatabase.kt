@@ -1,32 +1,33 @@
 package com.oso.weather.weather.model
 
 import com.oso.weather.common.entities.WeatherCity
+import com.oso.weather.common.entities.WeatherResponse
 import com.oso.weather.common.utils.Constants
 import com.oso.weather.common.utils.FormatUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class RemoteDatabase(
     private val service: WeatherService,
     private val utils: FormatUtils
 ) {
 
+    suspend fun searchWeatherByName(name: String, onResult: (WeatherResponse) -> Unit) =
+        withContext(Dispatchers.IO){
+            val result = service.searchWeatherByName(
+                key = Constants.VAL_API_KEY,
+                name = name,
+                language = Constants.VAL_LANGUAGE)
+            onResult(result)
+        }
 
-
-    suspend fun searchWeatherByName(name: String, onResult: (WeatherCity?) -> Unit) =
-        withContext(Dispatchers.IO) {
-            try {
-                val result = service.searchWeatherByName(
-                    key = Constants.VAL_API_KEY,
-                    name = name,
-                    language = Constants.VAL_LANGUAGE
-                )
-                onResult(utils.responseToWeatherCity(result))
-            } catch (e: Exception) {
-                onResult(null)
-            }
+    suspend fun getWeatherByCoordinates(coordinates: String, onResult: (WeatherResponse) -> Unit) =
+        withContext(Dispatchers.IO){
+            val result = service.getWeatherByCoordinates(
+                key = Constants.VAL_API_KEY,
+                coordinates = coordinates,
+                language = Constants.VAL_LANGUAGE)
+            onResult(result)
         }
 
 }
