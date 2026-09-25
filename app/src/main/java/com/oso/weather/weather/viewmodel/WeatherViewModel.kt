@@ -6,6 +6,7 @@ import com.oso.weather.R
 import com.oso.weather.common.entities.City
 import com.oso.weather.common.entities.WeatherCity
 import com.oso.weather.common.utils.FormatUtils
+import com.oso.weather.common.utils.NetworkUtils
 import com.oso.weather.weather.model.LocalDatabase
 import com.oso.weather.weather.model.RemoteDatabase
 import kotlinx.coroutines.Job
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class WeatherViewModel(
     private val rbd: RemoteDatabase,
-    private val ldb: LocalDatabase
+    private val ldb: LocalDatabase,
+    private val utils: NetworkUtils
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(WeatherUiState())
@@ -65,12 +67,16 @@ class WeatherViewModel(
     }
 
     fun getWeatherByCity(city: City) {
-        executeAction {
-            ldb.getWeatherCityByCityId(city.id) { result ->
-                if (result != null) {
-                    _uiState.update { it.copy(data = result) }
-                } else {
-                    _uiState.update { it.copy(msgRes = R.string.weather_local_by_city_error) }
+        executeAction @androidx.annotation.RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) {
+            if(utils.isOnline()){
+                searchWeather(city.name)
+            }else{
+                ldb.getWeatherCityByCityId(city.id) { result ->
+                    if (result != null) {
+                        _uiState.update { it.copy(data = result) }
+                    } else {
+                        _uiState.update { it.copy(msgRes = R.string.weather_local_by_city_error) }
+                    }
                 }
             }
         }
