@@ -1,5 +1,7 @@
 package com.oso.weather.common.utils
 
+import com.oso.weather.common.entities.City
+import com.oso.weather.common.entities.Weather
 import com.oso.weather.common.entities.WeatherCity
 import com.oso.weather.common.entities.WeatherResponse
 
@@ -25,4 +27,21 @@ class FormatUtils {
             return null
         }
     }
+
+    fun weatherCityToCity(weatherCity: WeatherCity): City {
+        return City(name = weatherCity.name,
+            country = weatherCity.country,
+            lat = weatherCity.lat,
+            lon = weatherCity.lon)
+    }
+
+    fun weatherCityToWeather(weatherCity: WeatherCity): Weather {
+        return Weather(
+            temp_c = weatherCity.temp_c,
+            iconHttps = weatherCity.iconHttps,
+            description = weatherCity.description,
+            wind_kph = weatherCity.wind_kph
+        )
+    }
+
 }

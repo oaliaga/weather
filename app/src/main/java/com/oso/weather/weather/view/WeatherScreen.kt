@@ -73,7 +73,9 @@ fun WeatherView(
                 onSelect = {city->
                     
                 },
-                onSave = {}
+                onSave = {
+                    vm.saveWeatherCity(uiState.data)
+                }
             )
             AntSnackbar(
                 modifier = Modifier

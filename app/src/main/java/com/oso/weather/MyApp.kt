@@ -1,6 +1,7 @@
 package com.oso.weather
 
 import android.app.Application
+import com.oso.weather.common.di.localDatasourceModule
 import com.oso.weather.common.di.utilsModule
 import com.oso.weather.weather.di.remoteDataSourceModule
 import com.oso.weather.weather.di.weatherModule
@@ -13,8 +14,12 @@ class MyApp : Application(){
         startKoin {
             androidContext(this@MyApp)
             modules(
-                weatherModule, utilsModule, remoteDataSourceModule,
-                //localDatasourceModule, componentsModule, citiesModule
+                weatherModule,
+                utilsModule,
+                remoteDataSourceModule,
+                localDatasourceModule,
+                //componentsModule
+                //citiesModule
             )
         }
     }
