@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.oso.weather.cities.view.CitiesScreen
+import com.oso.weather.cities.view.CitiesView
 import com.oso.weather.weather.view.WeatherView
 
 @Composable
@@ -22,7 +22,7 @@ fun AppNavHost(
             composable(destination.route) {
                 when (destination) {
                     Destination.WEATHER -> WeatherView(modifier)
-                    Destination.CITIES -> CitiesScreen(modifier)
+                    Destination.CITIES -> CitiesView(modifier)
                 }
             }
 

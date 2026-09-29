@@ -35,10 +35,10 @@ class DataSource(
     suspend fun getWeatherByCity(city: City, onResult: (WeatherCity?) -> Unit) {
         try {
             if (nUtils.isOnline()) {
-                rdb.searchWeatherByName(city.name) { onResult(fUtils.responseToWeatherCity(it)) }
-                /*rdb.getWeatherByCoordinates("${city.lat}, ${city.lon}") { result ->
+                //rdb.searchWeatherByName(city.name) { onResult(fUtils.responseToWeatherCity(it)) }
+                rdb.getWeatherByCoordinates("${city.lat}, ${city.lon}") { result ->
                     onResult(fUtils.responseToWeatherCity(result))
-                }*/
+                }
             } else {
                 ldb.getWeatherCityByCityId(city.id) { onResult(it) }
             }

@@ -5,11 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.oso.weather.R
 import com.oso.weather.common.entities.City
 import com.oso.weather.common.entities.WeatherCity
-import com.oso.weather.common.utils.FormatUtils
-import com.oso.weather.common.utils.NetworkUtils
 import com.oso.weather.weather.domain.DataSource
-import com.oso.weather.weather.model.LocalDatabase
-import com.oso.weather.weather.model.RemoteDatabase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -61,6 +57,7 @@ class WeatherViewModel(
                     _uiState.update { it.copy(msgRes = R.string.weather_local_save_success) }
                 }
             }
+            getAllCities()
         }
 
     }

@@ -17,6 +17,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
@@ -61,6 +63,8 @@ fun WeatherView(
     vm: WeatherViewModel = koinViewModel()
 ) {
     val uiState by vm.uiState.collectAsState()
+
+
     Box(modifier.fillMaxSize()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -164,13 +168,12 @@ private fun ActionsView(
                 onSelect(city)
             }
         )
-        OutlinedIconButton(
-            onClick = { onSave() },
-            enabled = uiState.data.name.isNotBlank()
-        ) {
-            Icon(
-                imageVector = Icons.Default.CloudDownload, contentDescription = "lupa"
-            )
+        OutlinedIconButton(onClick = { onSave() },
+            enabled = uiState.data.name.isNotBlank(),
+            colors = IconButtonDefaults.iconButtonColors(
+                contentColor = MaterialTheme.colorScheme.primary
+            )) {
+            Icon(Icons.Default.CloudDownload, contentDescription = "lupad")
         }
     }
 }
