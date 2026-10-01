@@ -8,8 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RemoteDatabase(
-    private val service: WeatherService,
-    private val utils: FormatUtils
+    private val service: WeatherService
 ) {
 
     suspend fun searchWeatherByName(name: String, onResult: (WeatherResponse) -> Unit) =

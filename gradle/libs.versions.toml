@@ -22,6 +22,14 @@ navControllerV = "2.9.2"
 dataPreferencesV = "1.1.7"
 kotlinxSerialization = "1.8.1"
 
+
+mockitoKotlin = "6.0.0"
+mockitoInline = "5.2.0"
+kotlinxCoroutinesTest = "1.10.2"
+mockkVersion = "1.14.5"
+koinTest = "4.0.3"
+koinTestJunit4 = "4.0.3"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -69,6 +77,15 @@ retrofit = {module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"
 retrofit-adapter = {module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit"}
 
 coil = {module = "io.coil-kt:coil-compose",version.ref ="coil" }
+
+
+
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koinTestJunit4" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
 
 
 [plugins]

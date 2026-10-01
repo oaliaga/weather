@@ -26,7 +26,7 @@ import com.oso.weather.navigation.AppNavHost
 import com.oso.weather.navigation.Destination
 import com.oso.weather.ui.theme.WeatherTheme
 
-//https://www.udemy.com/course/domina-android-desde-cero-kotlin-compose/learn/lecture/51850747#notes
+//51850747#notes
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

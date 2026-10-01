@@ -20,8 +20,12 @@ class DataSource(
 
     suspend fun searchWeatherByName(name: String, onResult: (WeatherCity?) -> Unit) {
         try {
-            rdb.searchWeatherByName(name) { result ->
-                onResult(fUtils.responseToWeatherCity(result))
+            if (name.isEmpty()) {
+                onResult(null)
+            } else {
+                rdb.searchWeatherByName(name) { result ->
+                    onResult(fUtils.responseToWeatherCity(result))
+                }
             }
         } catch (e: Exception) {
             onResult(null)
